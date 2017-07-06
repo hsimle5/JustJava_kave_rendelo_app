@@ -1,17 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="8dp"
     android:orientation="vertical"
     tools:context="hu.flexisys.soma.justjava.MainActivity">
 
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Enter your name"
+        android:id="@+id/name_text"
+        android:layout_marginBottom="8dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="toppings"
+        android:layout_marginBottom="16dp"
+        android:textAllCaps="true"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/whipped_cream_checkbox"
+        android:text="Whipped cream"
+        android:paddingLeft="24dp"
+        android:textSize="16sp"/>
+
+
     <TextView
         android:id="@+id/quantity_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:text="quantity"
         android:textAllCaps="true" />
@@ -68,7 +96,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/order_summary_text_view"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:onClick="submitOrder"
         android:text="Order" />
-
 </LinearLayout>
+</ScrollView>
