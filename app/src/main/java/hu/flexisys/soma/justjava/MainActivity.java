@@ -1,10 +1,13 @@
 package hu.flexisys.soma.justjava;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.NumberFormat;
 
@@ -26,36 +29,59 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
-        displayPrice(quantity * COFFEE_PRICE);
+        int price;
+        price = calculatePrice(quantity,COFFEE_PRICE);
+        String message = createOrderSummary(price, "Soma" , quantity);
+        displayMessage(message);
+        coffeeToast();
     }
 
     /**
      * This method displays the given quantity value on the screen.
      */
-    private void display(int number) {
+    private void displayQuantity(int number) {
         TextView quantityTextView = (TextView) findViewById(R.id.quantity_text_view);
         quantityTextView.setText(Integer.toString(number));
     }
 
-    private void displayPrice(int number) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
-    }
+
 
     public void decrease(View view) {
         if (quantity > 0) {
             quantity--;
         }
-        display(quantity);
+        displayQuantity(quantity);
     }
 
     public void increase(View view) {
         quantity++;
-        display(quantity);
+        displayQuantity(quantity);
     }
 
     private void displayMessage(String message) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText(message);
+        TextView orderSummaryTextView = (TextView) findViewById(R.id.order_summary_text_view);
+        orderSummaryTextView.setText(message);
+
+    }
+
+    private int calculatePrice (int price, int quantity){
+        return price*quantity;
+    }
+
+    private String createOrderSummary (int price, String name, int quantity){
+        return  "Name: " + name + "\n" + "Quantity: " + quantity + "\n" + "Total: " + NumberFormat.getCurrencyInstance().format(price) + "\n" + "Thanks!";
+    }
+
+    private void coffeeToast (){
+        Context context = getApplicationContext();
+            CharSequence text;
+            if(quantity>2) { text = "You drink too muck coffee!"; }
+            else if (quantity == 0) { text = "You should order something";}
+            else {text = "Enjoy your coffee!";}
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+
     }
 }
