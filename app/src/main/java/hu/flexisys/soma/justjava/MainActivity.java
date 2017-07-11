@@ -2,6 +2,8 @@ package hu.flexisys.soma.justjava;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,7 +18,7 @@ import java.text.NumberFormat;
  */
 public class MainActivity extends AppCompatActivity {
 
-    public static final int COFFEE_PRICE = 2;
+    public static final int COFFEE_PRICE = 5;
     public static final int WHIPPED_CREAM_PRICE = 1;
     int quantity = 0;
 
@@ -41,6 +43,17 @@ public class MainActivity extends AppCompatActivity {
         String message = createOrderSummary(price, name , quantity);
         displayMessage(message);
         coffeeToast();
+
+        //intent indítás
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        //intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"hsimle@gmail.com","a@b.hu"});
+        intent.putExtra(Intent.EXTRA_EMAIL, "hsimle@gmail.com");
+        intent.putExtra(Intent.EXTRA_SUBJECT, name + "'s order summary");
+        intent.putExtra(Intent.EXTRA_TEXT, message);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
     /**
@@ -78,7 +91,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String createOrderSummary (int price, String name, int quantity){
-        return  "Name: " + name + "\n" + "Quantity: " + quantity + "\n" + "Total: " + NumberFormat.getCurrencyInstance().format(price) + "\n" + "Thanks!";
+        return  "Name: " + name + "\n" + "Quantity: " + quantity + "\n" + "Total: " + NumberFormat.getCurrencyInstance().format(price) + "\n" + getString(R.string.thanks);
+        //stringbe kiemelés
     }
 
     private void coffeeToast (){
